@@ -1,10 +1,9 @@
-<div align="center">
+
 🚀 PostsFlow App
 A Flutter Application to Fetch, Cache, and Display Posts Smoothly
 
 Built with Flutter 3, BLoC State Management, REST APIs, and Local Storage
 
-</div>
 📑 Table of Contents
 
 Project Overview
@@ -98,12 +97,19 @@ Clean theme with consistent color palette
 
 🛠️ Tech Stack
 Layer    |    	Technology Used
+
 Framework  	|   Flutter 3.x
+
 State Management	|    BLoC (flutter_bloc)
+
 Networking	  |   http package
+
 Architecture	|  MVVM + Repository
+
 Caching  	|    SharedPreferences
+
 UI	  |     Material 3,Custom Widgets
+
 API	  |    JSON Placeholder REST API
 
 🧠🔥USED BLoC STATE MANAGEMENT :
@@ -124,7 +130,8 @@ BLoC outputs States
 
 UI rebuilds based on state
 
-🟦 Why BLoC? (In Simple Terms)
+🟦 Why BLoC?
+
 Problem Without BLoC	How BLoC Solves It UI gets mixed with logic	Clean separation Hard to maintain	Highly scalable Rebuilding wrong widgets	Only updates listening widgets Unpredictable behavior	Predictable state transitions
 Difficult debugging	State-by-state traceable logic
 
@@ -194,49 +201,6 @@ UI shows an error message.
          ↑                                                                 |
          └──────────────────── UI listens for state changes ───────────────┘
 
-🟥 Example: Fetching Posts with BLoC
-1. UI Triggers Event
-add(FetchPostsEvent());
-
-2. BLoC Executes Logic
-_onFetchPosts(event, emit) async {
-  emit(PostsLoadingState());
-
-  final posts = await repository.fetchPosts();
-
-  emit(PostsLoadedState(posts));
-}
-
-3. UI Responds to State
-BlocBuilder<PostsBloc, PostsState>(
-  builder: (context, state) {
-    if (state is PostsLoadingState) {
-      return CircularProgressIndicator();
-    }
-    if (state is PostsLoadedState) {
-      return ListView.builder(...);
-    }
-    return ErrorMessage();
-  },
-);
-
-🟦 Example: Marking Post as Read (BLoC + Local Storage)
-
-When a user clicks a post:
-
-add(MarkPostAsReadEvent(post));
-
-BLoC Handles It:
-_onMarkPostAsRead(event, emit) {
-  repository.markPostAsRead(event.post.id);
-  
-  final updatedPosts = state.posts.map((p) {
-    if (p.id == event.post.id) p.isRead = true;
-    return p;
-  }).toList();
-
-  emit(PostsLoadedState(updatedPosts));
-}
 
 
 🟪 BLoC Components Used
@@ -312,6 +276,108 @@ UI → Router → PostDetailBloc → UI
 User tap → Cubit → State → Page Switch
 
 
+⚠️ Error Handling in PostsFlow App
+
+The PostsFlow App uses a structured, layered error-handling system to ensure smooth user experience even when network or data failures occur. The app never crashes due to API or storage errors because all exceptions are properly captured, mapped, and converted into user-friendly messages.
+
+🎯 Key Principles of Error Handling
+
+Prevent application crashes
+
+Convert technical exceptions into readable messages
+
+Keep UI free from business-logic errors
+
+Maintain a predictable BLoC → State → UI flow
+
+Enable users to retry operations easily
+
+🧱 Error Handling Architecture
+
+Error handling in PostsFlow is implemented across three distinct layers:
+
+1️⃣ API Service Layer (Network-Level Errors)
+
+All API calls are wrapped in try-catch and can throw custom exceptions when:
+
+Internet connection fails
+
+Request timeouts occur
+
+API endpoint returns 404/500
+
+Response data is invalid or empty
+
+When such errors occur, ApiService throws:
+
+AppException("Unable to fetch data from server.")
+
+
+This prevents raw HTTP errors from leaking into the UI.
+
+2️⃣ Repository Layer (Logic-Level Error Mapping)
+
+The repository receives exceptions from the API service and converts them into clean domain errors.
+
+Example:
+
+throw AppException("Failed to load posts. Please try again.");
+
+
+This ensures the UI and BLoC receive meaningful messages instead of raw exceptions.
+
+3️⃣ BLoC Layer (State-Level Error Handling)
+
+BLoC listens for exceptions and emits appropriate error states:
+
+emit(PostsErrorState("Something went wrong while loading posts."));
+
+
+This ensures:
+
+All errors are represented as states, not crashes
+
+UI can gracefully switch to an error message screen
+
+User can pull-to-refresh or retry
+
+🖥️ User-Friendly Error Display
+
+Errors are shown through a common reusable component:
+
+ErrorMessage Widget
+
+Displays:
+
+Error text
+
+Retry button
+
+Friendly styling
+
+Example message:
+
+Unable to fetch posts.
+Please check your internet connection.
+
+🔁 Retry Support
+
+Users can retry loading posts via:
+
+A refresh event
+
+Retry button
+
+Back navigation
+
+This triggers:
+
+FetchPostsEvent()
+
+
+ensuring the app recovers without restarting.
+
+
 🏛 Architecture Overview
 
 PostsFlow follows a clean, scalable architecture:
@@ -328,6 +394,7 @@ Data Source
 📂 Folder Structure
 lib/
  ├── app.dart
+ 
  ├── main.dart
 
  ├── config/
@@ -337,19 +404,25 @@ lib/
  ├── core/
  │    ├── constants/
  │    │     └── app_colors.dart
+ 
  │    ├── error/
+ 
  │    │     └── app_exceptions.dart
+ 
  │    └── utils/
  │          └── helpers.dart
 
  ├── data/
  │    ├── models/
- │    │     └── post_model.dart
+ │    │     └── post_model.
+ 
  │    ├── repository/
  │    │     └── post_repository.dart
+ 
  │    ├── services/
  │    │     ├── api_service.dart
  │    │     └── local_storage_service.dart
+ 
  │    └── local/
  │          └── local_database.dart
 
@@ -357,10 +430,12 @@ lib/
  │    ├── bottom_nav/
  │    │     ├── bottom_nav_cubit.dart
  │    │     └── bottom_nav_state.dart
+ 
  │    ├── posts/
  │    │     ├── posts_bloc.dart
  │    │     ├── posts_event.dart
  │    │     └── posts_state.dart
+ 
  │    └── post_detail/
  │          ├── post_detail_bloc.dart
  │          ├── post_detail_event.dart
@@ -373,6 +448,7 @@ lib/
  │    │     ├── posts/post_detail_screen.dart
  │    │     ├── settings/settings_screen.dart
  │    │     ├── profile/profile_screen.dart
+ 
  │    ├── widgets/
  │    │     ├── post_item_card.dart
  │    │     ├── gif_banner.dart
@@ -437,7 +513,7 @@ Shows title + body
 
 Settings Screen
 
-Dummy settings
+settings
 
 Logo + user options
 
