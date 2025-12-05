@@ -53,14 +53,21 @@ PostsFlow App is a Flutter application designed to fetch a list of posts from a 
 The goal of this assignment project is to show:
 
 ✔ Code cleanliness
+
 ✔ Layered folder architecture
+
 ✔ Efficient state management
+
 ✔ UI/UX polish
-✔ API handling + caching
+
+✔ API handling + 
+
 ✔ Reusability of widgets
+
 ✔ Professional development practices
 
 🎯 Objectives
+
 1. Functional Objectives
 
 Fetch posts from API
@@ -113,6 +120,7 @@ UI	  |     Material 3,Custom Widgets
 API	  |    JSON Placeholder REST API
 
 🧠🔥USED BLoC STATE MANAGEMENT :
+
 BLoC is a pattern that separates the UI from the business logic, ensuring that the UI only reacts to states while the logic is processed behind the scenes.
 
 It follows:
@@ -132,8 +140,9 @@ UI rebuilds based on state
 
 🟦 Why BLoC?
 
-Problem Without BLoC	How BLoC Solves It UI gets mixed with logic	Clean separation Hard to maintain	Highly scalable Rebuilding wrong widgets	Only updates listening widgets Unpredictable behavior	Predictable state transitions
-Difficult debugging	State-by-state traceable logic
+Problem Without BLoC	How BLoC Solves It UI gets mixed with logic	Clean separation Hard to maintain	Highly scalable Rebuilding wrong widgets	Only updates listening widgets Unpredictable behavior	Predictable 
+
+state transitions Difficult debugging	State-by-state traceable logic
 
 BLoC guarantees that your app behaves the same way every time, even with complex flows.
 
@@ -204,6 +213,7 @@ UI shows an error message.
 
 
 🟪 BLoC Components Used
+
 ✔ PostsEvent
 
 Handles all user-triggered actions:
@@ -259,6 +269,7 @@ No direct logic inside widgets
 Smooth UI performance
 
 🟦 Summary of BLoC Workflows in This App
+
 🔹 Fetch Posts
 
 UI → Event → Repository → API → State → UI Update
@@ -278,7 +289,9 @@ User tap → Cubit → State → Page Switch
 
 ⚠️ Error Handling in PostsFlow App
 
-The PostsFlow App uses a structured, layered error-handling system to ensure smooth user experience even when network or data failures occur. The app never crashes due to API or storage errors because all exceptions are properly captured, mapped, and converted into user-friendly messages.
+The PostsFlow App uses a structured, layered error-handling system to ensure smooth user experience even when network or data failures occur. The app never crashes due to API or storage errors because all 
+
+exceptions are properly captured, mapped, and converted into user-friendly messages.
 
 🎯 Key Principles of Error Handling
 
@@ -383,12 +396,16 @@ ensuring the app recovers without restarting.
 PostsFlow follows a clean, scalable architecture:
 
 Presentation Layer (UI)
+
       ↓
 Logic Layer (BLoC / Cubits)
+
       ↓
 Repository Layer
+
       ↓
 Data Source
+
 (API Service & Local Storage)
 
 📂 Folder Structure
@@ -460,13 +477,17 @@ lib/
        └── gif/avatar.gif
 
 🔄 Data Flow
+
 1. Fetch API
+
 UI → PostsBloc → Repository → ApiService → API
 
-2. Store read status locally
+3. Store read status locally
+   
 UI → Bloc Event → LocalStorageService → SharedPreferences
 
-3. Navigate to details
+5. Navigate to details
+   
 UI → Navigator → PostDetailScreen
 
 🌐 API Details
@@ -478,8 +499,11 @@ https://jsonplaceholder.typicode.com/posts
 Sample Response:
 {
   "userId": 1,
+  
   "id": 1,
+  
   "title": "Sample title",
+  
   "body": "Sample description..."
 }
 
@@ -493,6 +517,7 @@ read_posts = [1, 4, 7, 10]
 So when user opens app again → read posts stay marked as red.
 
 🖼 Screens & UI Explanation
+
 Home Screen
 
 Welcoming text
@@ -528,10 +553,13 @@ Menu options
 Clean one-color background
 
 🪄 GIF & Gradient Card Logic
+
 Unread Post
+
 Pink → Gold gradient
 
 After Clicking
+
 Solid Red
 
 GIF Widget Features
@@ -559,20 +587,28 @@ Parsing Error
 UI fallback → ErrorMessage widget.
 
 🚀 Setup Instructions
+
 1. Clone Repo
+
 git clone https://github.com/yourusername/postsflow_app.git
 
-2. Install Dependencies
+3. Install Dependencies
+
 flutter pub get
 
-3. Run App
+5. Run App
+
+
 flutter run
 
 📦 Build Release
+
 Android:
+
 flutter build apk
 
 iOS:
+
 flutter build ios
 
 
