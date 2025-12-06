@@ -1,6 +1,6 @@
-<h1 align="center">🚀 PostsFlow App</h1>
-<h3 align="center">A Flutter Application to Fetch, Cache, and Display Posts Smoothly</h3>
-<p align="center"> Built with <b>Flutter 3</b>, <b>BLoC State Management</b>, <b>REST APIs</b>, and <b>Local Storage</b> </p>
+<h1 >🚀 PostsFlow App</h1>
+<h3 >A Flutter Application to Fetch, Cache, and Display Posts Smoothly</h3>
+<p> Built with <b>Flutter 3</b>, <b>BLoC State Management</b>, <b>REST APIs</b>, and <b>Local Storage</b> </p>
 <h2>📑 Table of Contents</h2>
 
 Project Overview
