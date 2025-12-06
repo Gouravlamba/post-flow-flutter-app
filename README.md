@@ -1,10 +1,7 @@
-
-🚀 PostsFlow App
-A Flutter Application to Fetch, Cache, and Display Posts Smoothly
-
-Built with Flutter 3, BLoC State Management, REST APIs, and Local Storage
-
-📑 Table of Contents
+<h1 align="center">🚀 PostsFlow App</h1>
+<h3 align="center">A Flutter Application to Fetch, Cache, and Display Posts Smoothly</h3>
+<p align="center"> Built with <b>Flutter 3</b>, <b>BLoC State Management</b>, <b>REST APIs</b>, and <b>Local Storage</b> </p>
+<h2>📑 Table of Contents</h2>
 
 Project Overview
 
@@ -46,11 +43,19 @@ Contributing
 
 License
 
-🧩 Project Overview
+<h2>🧩 Project Overview</h2>
 
-PostsFlow App is a Flutter application designed to fetch a list of posts from a REST API, cache them locally, display them in a beautiful UI, and provide a smooth browsing experience using state management and clean architecture.
+PostsFlow App is a Flutter application designed to:
 
-The goal of this assignment project is to show:
+Fetch a list of posts from a REST API
+
+Cache them locally
+
+Display them in a beautiful UI
+
+Provide smooth browsing using BLoC + clean architecture
+
+Goals of the assignment:
 
 ✔ Code cleanliness
 
@@ -60,15 +65,14 @@ The goal of this assignment project is to show:
 
 ✔ UI/UX polish
 
-✔ API handling + 
+✔ API handling
 
-✔ Reusability of widgets
+✔ Reusable widgets
 
 ✔ Professional development practices
 
-🎯 Objectives
-
-1. Functional Objectives
+<h2>🎯 Objectives</h2>
+<h3>1️⃣ Functional Objectives</h3>
 
 Fetch posts from API
 
@@ -82,7 +86,7 @@ Cache read status locally
 
 Provide drawer + settings screen
 
-2. Technical Objectives
+<h3>2️⃣ Technical Objectives</h3>
 
 Implement BLoC for app-wide state management
 
@@ -90,529 +94,306 @@ Build Repository Pattern for API abstraction
 
 Add local caching using SharedPreferences
 
-Build reusable widgets (GIF Banner, Post Card, etc.)
+Build reusable widgets
 
-3. UI/UX Objectives
+Add GIF Banner and Post Card widgets
+
+<h3>3️⃣ UI/UX Objectives</h3>
 
 Gradient cards for unread posts
 
-Change card to red after clicking
+Card turns red after clicking
 
-Light animated GIF on Home screen
+Animated GIF on home screen
 
-Clean theme with consistent color palette
+Clean Material 3 theme
 
-🛠️ Tech Stack
-Layer    |    	Technology Used
+<h2>🛠️ Tech Stack</h2>
+Layer	Technology
+Framework	Flutter 3.x
+State Management	BLoC (flutter_bloc)
+Networking	http package
+Architecture	MVVM + Repository
+Caching	SharedPreferences
+UI	Material 3, Custom Widgets
+API	JSON Placeholder REST API
+<h2>🧠🔥 BLoC State Management</h2>
 
-Framework  	|   Flutter 3.x
+BLoC separates UI from business logic:
 
-State Management	|    BLoC (flutter_bloc)
-
-Networking	  |   http package
-
-Architecture	|  MVVM + Repository
-
-Caching  	|    SharedPreferences
-
-UI	  |     Material 3,Custom Widgets
-
-API	  |    JSON Placeholder REST API
-
-🧠🔥USED BLoC STATE MANAGEMENT :
-
-BLoC is a pattern that separates the UI from the business logic, ensuring that the UI only reacts to states while the logic is processed behind the scenes.
-
-It follows:
-
-Event  →  Bloc (Logic)  →  State
-
+Flow:
+Event → BLoC Logic → State
 
 Meaning:
 
 UI sends Events
 
-BLoC receives events and runs logic
+BLoC receives events & processes logic
 
 BLoC outputs States
 
-UI rebuilds based on state
+UI rebuilds based on new state
 
-🟦 Why BLoC?
+<h3>🟦 Why BLoC?</h3>
 
-Problem Without BLoC	How BLoC Solves It UI gets mixed with logic	Clean separation Hard to maintain	Highly scalable Rebuilding wrong widgets	Only updates listening widgets Unpredictable behavior	Predictable 
+UI gets mixed with logic → ❌
 
-state transitions Difficult debugging	State-by-state traceable logic
+Hard to scale → ❌
 
-BLoC guarantees that your app behaves the same way every time, even with complex flows.
+Unpredictable behavior → ❌
 
-🟩 How BLoC Works in PostsFlow App
+Debugging issues → ❌
 
-Below is the actual flow used in this project:
+BLoC fixes all of this via:
 
-1️⃣ UI Sends an Event
+Clean separation
 
-When Posts screen opens:
+Scalable architecture
 
+Predictable state transitions
+
+Easy debugging
+
+Efficient UI rebuilds
+
+<h3>🟩 How BLoC Works in PostsFlow App</h3>
+1️⃣ UI Sends Event
 context.read<PostsBloc>().add(FetchPostsEvent());
-
-
-When tapping a post card:
-
 context.read<PostsBloc>().add(MarkPostAsReadEvent(post));
 
+2️⃣ BLoC Receives Event
 
-The UI never touches API logic.
+Processes logic:
 
-2️⃣ BLoC Receives the Event
-
-Example:
-
-on<FetchPostsEvent>(_onFetchPosts);
-
-
-Now the BLoC decides what to do:
-
-Fetch API data
-
-Validate response
+Fetch from API
 
 Store read status
 
-Emit success or failure states
+Emit states
 
-3️⃣ BLoC Emits a State
+3️⃣ BLoC Emits State
 
-Possible states:
+Loading → PostsLoadingState()
 
-Loading State
-emit(PostsLoadingState());
+Loaded → PostsLoadedState(posts)
 
+Error → PostsErrorState(message)
 
-The UI shows a loader.
-
-Loaded State
-emit(PostsLoadedState(posts));
-
-
-UI displays data.
-
-Error State
-emit(PostsErrorState("Failed to fetch posts"));
-
-
-UI shows an error message.
-
-🟨 Full Visual Flow Diagram
+<h3>🟨 Visual Flow Diagram</h3>
  ┌────────────┐       ┌──────────────┐      ┌──────────────┐      ┌────────────┐
  │    UI      │ ----> │    Event     │ ---> │     BLoC     │ ---> │   State    │
  └────────────┘       └──────────────┘      └──────────────┘      └────────────┘
          ↑                                                                 |
          └──────────────────── UI listens for state changes ───────────────┘
 
+<h2>🟪 BLoC Components Used</h2>
 
+✔ PostsEvent — fetch, refresh, mark as read
 
-🟪 BLoC Components Used
+✔ PostsState — loading, loaded, error
 
-✔ PostsEvent
-
-Handles all user-triggered actions:
-
-Fetch posts
-
-Refresh
-
-Mark as read
-
-✔ PostsState
-
-Represents the UI at any moment:
-
-Loading
-
-Loaded
-
-Error
-
-✔ PostsBloc
-
-The heart of the logic:
-
-Communicates with repository
-
-Emits correct states
-
-Updates UI
+✔ PostsBloc — core logic + repository communication
 
 ✔ PostDetailBloc
 
-Handles details screen logic.
-
 ✔ BottomNavCubit
 
-Controls bottom nav state.
+<h2>🟧 Benefits of Using BLoC</h2>
 
-🟧 Benefits of Using BLoC in this Assignment
+Clean architecture
 
-Clean and professional architecture
+Reusable widgets
 
-Reusable widgets with predictable behavior
+Easy to test
 
-Very easy to test
+Scales to large apps
 
-Works with large real-world apps
+No UI-level business logic
 
-Matches modern Flutter standards
+Smooth performance
 
-No direct logic inside widgets
+<h2>⚠️ Error Handling in PostsFlow</h2>
+Key Principles
 
-Smooth UI performance
+Prevent crashes
 
-🟦 Summary of BLoC Workflows in This App
+Convert technical errors → readable messages
 
-🔹 Fetch Posts
+Keep BLoC predictable
 
-UI → Event → Repository → API → State → UI Update
+UI shows friendly fallback screens
 
-🔹 Mark as Read
+Retry support
 
-UI → Event → Local Storage → Update State → UI Update
+<h3>🧱 Error Handling Layers</h3>
+1️⃣ API Layer
 
-🔹 Navigate to Details
+Handles:
 
-UI → Router → PostDetailBloc → UI
+No internet
 
-🔹 Bottom Navigation
+Timeout
 
-User tap → Cubit → State → Page Switch
+404/500
 
+Invalid JSON
 
-⚠️ Error Handling in PostsFlow App
-
-The PostsFlow App uses a structured, layered error-handling system to ensure smooth user experience even when network or data failures occur. The app never crashes due to API or storage errors because all 
-
-exceptions are properly captured, mapped, and converted into user-friendly messages.
-
-🎯 Key Principles of Error Handling
-
-Prevent application crashes
-
-Convert technical exceptions into readable messages
-
-Keep UI free from business-logic errors
-
-Maintain a predictable BLoC → State → UI flow
-
-Enable users to retry operations easily
-
-🧱 Error Handling Architecture
-
-Error handling in PostsFlow is implemented across three distinct layers:
-
-1️⃣ API Service Layer (Network-Level Errors)
-
-All API calls are wrapped in try-catch and can throw custom exceptions when:
-
-Internet connection fails
-
-Request timeouts occur
-
-API endpoint returns 404/500
-
-Response data is invalid or empty
-
-When such errors occur, ApiService throws:
-
+Throws:
 AppException("Unable to fetch data from server.")
 
+2️⃣ Repository Layer
 
-This prevents raw HTTP errors from leaking into the UI.
+Maps raw errors → meaningful domain errors.
 
-2️⃣ Repository Layer (Logic-Level Error Mapping)
+3️⃣ BLoC Layer
 
-The repository receives exceptions from the API service and converts them into clean domain errors.
+Emits clean error states:
 
-Example:
+emit(PostsErrorState("Something went wrong."));
 
-throw AppException("Failed to load posts. Please try again.");
-
-
-This ensures the UI and BLoC receive meaningful messages instead of raw exceptions.
-
-3️⃣ BLoC Layer (State-Level Error Handling)
-
-BLoC listens for exceptions and emits appropriate error states:
-
-emit(PostsErrorState("Something went wrong while loading posts."));
-
-
-This ensures:
-
-All errors are represented as states, not crashes
-
-UI can gracefully switch to an error message screen
-
-User can pull-to-refresh or retry
-
-🖥️ User-Friendly Error Display
-
-Errors are shown through a common reusable component:
-
-ErrorMessage Widget
+4️⃣ UI Error Widget
 
 Displays:
 
-Error text
+Error message
 
 Retry button
 
-Friendly styling
-
-Example message:
-
-Unable to fetch posts.
-Please check your internet connection.
-
-🔁 Retry Support
-
-Users can retry loading posts via:
-
-A refresh event
-
-Retry button
-
-Back navigation
-
-This triggers:
-
-FetchPostsEvent()
-
-
-ensuring the app recovers without restarting.
-
-
-🏛 Architecture Overview
-
-PostsFlow follows a clean, scalable architecture:
+<h2>🏛 Architecture Overview</h2>
 
 Presentation Layer (UI)
-
-      ↓
-Logic Layer (BLoC / Cubits)
-
-      ↓
+⬇
+Logic Layer (BLoC/Cubit)
+⬇
 Repository Layer
+⬇
+Data Sources (API + Local Storage)
 
-      ↓
-Data Source
-
-(API Service & Local Storage)
-
-📂 Folder Structure
+<h2>📂 Folder Structure</h2>
 lib/
  ├── app.dart
- 
  ├── main.dart
-
  ├── config/
  │    ├── routes.dart
  │    └── theme.dart
-
  ├── core/
  │    ├── constants/
  │    │     └── app_colors.dart
- 
  │    ├── error/
- 
  │    │     └── app_exceptions.dart
- 
  │    └── utils/
  │          └── helpers.dart
-
  ├── data/
  │    ├── models/
- │    │     └── post_model.
- 
+ │    │     └── post_model.dart
  │    ├── repository/
  │    │     └── post_repository.dart
- 
  │    ├── services/
  │    │     ├── api_service.dart
  │    │     └── local_storage_service.dart
- 
  │    └── local/
  │          └── local_database.dart
-
  ├── logic/
  │    ├── bottom_nav/
- │    │     ├── bottom_nav_cubit.dart
- │    │     └── bottom_nav_state.dart
- 
  │    ├── posts/
- │    │     ├── posts_bloc.dart
- │    │     ├── posts_event.dart
- │    │     └── posts_state.dart
- 
  │    └── post_detail/
- │          ├── post_detail_bloc.dart
- │          ├── post_detail_event.dart
- │          └── post_detail_state.dart
-
  ├── presentation/
  │    ├── screens/
- │    │     ├── home/home_screen.dart
- │    │     ├── posts/posts_list_screen.dart
- │    │     ├── posts/post_detail_screen.dart
- │    │     ├── settings/settings_screen.dart
- │    │     ├── profile/profile_screen.dart
- 
  │    ├── widgets/
- │    │     ├── post_item_card.dart
- │    │     ├── gif_banner.dart
- │    │     ├── app_drawer.dart
- │    │     └── error_message.dart
-
  └── assets/
-       ├── task.png
-       └── gif/avatar.gif
 
-🔄 Data Flow
+<h2>🔄 Data Flow</h2>
 
-1. Fetch API
+Fetch API: UI → BLoC → Repository → ApiService → API
 
-UI → PostsBloc → Repository → ApiService → API
+Store Read Status: UI → BLoC → SharedPreferences
 
-3. Store read status locally
-   
-UI → Bloc Event → LocalStorageService → SharedPreferences
+Navigate: UI → Navigator → DetailScreen
 
-5. Navigate to details
-   
-UI → Navigator → PostDetailScreen
+<h2>🌐 API Details</h2>
 
-🌐 API Details
-
-API Source:
-
-https://jsonplaceholder.typicode.com/posts
+API: https://jsonplaceholder.typicode.com/posts
 
 Sample Response:
+
 {
   "userId": 1,
-  
   "id": 1,
-  
   "title": "Sample title",
-  
   "body": "Sample description..."
 }
 
-💾 Local Storage (Caching Read Status)
+<h2>💾 Local Storage</h2>
 
-The app saves:
+Stores:
 
 read_posts = [1, 4, 7, 10]
 
 
-So when user opens app again → read posts stay marked as red.
+Read posts remain red on restart.
 
-🖼 Screens & UI Explanation
+<h2>🖼 Screens & UI Explanation</h2>
+🏠 Home Screen
 
-Home Screen
-
-Welcoming text
+Welcome text
 
 Animated GIF
 
-Drawer with profile
-
-Posts List Screen
-
-Gradient card for unread posts
-
-Tap card → mark as read (turns red)
-
-Post Detail Screen
-
-Shows title + body
-
-Settings Screen
-
-settings
-
-Logo + user options
-
 Drawer
+
+📃 Posts List
+
+Gradient unread cards
+
+Click → turns red
+
+📄 Post Detail
+
+Title + description
+
+⚙ Settings Screen
 
 Logo
 
-Circular avatar
+Preferences
 
-Menu options
-
-Clean one-color background
-
-🪄 GIF & Gradient Card Logic
-
+<h2>🪄 GIF & Gradient Card Logic</h2>
 Unread Post
 
-Pink → Gold gradient
+Gradient: Pink → Gold
 
 After Clicking
 
-Solid Red
+Solid Red Card
 
-GIF Widget Features
+GIF Widget
 
 Smooth fade-in
 
 Circular loader
 
-gaplessPlayback = true
+gaplessPlayback
 
-Reusable widget
+Reusable
 
-🧩 Error Handling
-
-Custom App Exceptions:
-
-No Internet
-
-API Failure
-
-Timeout
-
-Parsing Error
-
-UI fallback → ErrorMessage widget.
-
-🚀 Setup Instructions
-
-1. Clone Repo
-
+<h2>🚀 Setup Instructions</h2>
+1️⃣ Clone Repo
 git clone https://github.com/yourusername/postsflow_app.git
 
-3. Install Dependencies
-
+2️⃣ Install Dependencies
 flutter pub get
 
-5. Run App
-
-
+3️⃣ Run App
 flutter run
 
-📦 Build Release
-
-Android:
-
+<h2>📦 Build Release</h2>
+Android
 flutter build apk
 
-iOS:
-
+iOS
 flutter build ios
 
-
-🔮 Future Enhancements
+<h2>🔮 Future Enhancements</h2>
 
 Dark mode
 
