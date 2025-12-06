@@ -136,13 +136,13 @@ UI rebuilds based on new state
 
 <h3>🟦 Why BLoC?</h3>
 
-UI gets mixed with logic → ❌
+UI gets mixed with logic  
 
-Hard to scale → ❌
+Hard to scale 
 
-Unpredictable behavior → ❌
+Unpredictable behavior 
 
-Debugging issues → ❌
+Debugging issues 
 
 BLoC fixes all of this via:
 
@@ -272,35 +272,49 @@ Data Sources (API + Local Storage)
 <h2>📂 Folder Structure</h2>
 lib/
  ├── app.dart
+ 
  ├── main.dart
+ 
  ├── config/
  │    ├── routes.dart
  │    └── theme.dart
+ 
  ├── core/
+ 
  │    ├── constants/
  │    │     └── app_colors.dart
+ 
  │    ├── error/
  │    │     └── app_exceptions.dart
+ 
  │    └── utils/
  │          └── helpers.dart
+ 
  ├── data/
+ 
  │    ├── models/
  │    │     └── post_model.dart
+ 
  │    ├── repository/
  │    │     └── post_repository.dart
+ 
  │    ├── services/
  │    │     ├── api_service.dart
  │    │     └── local_storage_service.dart
+ 
  │    └── local/
  │          └── local_database.dart
+ 
  ├── logic/
  │    ├── bottom_nav/
  │    ├── posts/
  │    └── post_detail/
+ 
  ├── presentation/
  │    ├── screens/
  │    ├── widgets/
  └── assets/
+ 
 
 <h2>🔄 Data Flow</h2>
 
